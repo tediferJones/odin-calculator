@@ -29,4 +29,42 @@ function operate(firstTerm, operator, secondTerm) {
     }
 }
 
-console.log(operate(2,"times",10))
+//console.log(operate(2,"times",10))
+
+
+const containerVar = document.querySelector("#container");
+
+const display = document.createElement("div");
+display.classList.add("displayContainer");
+display.style.backgroundColor = "gray";
+
+const btnContainer = document.createElement("div");
+btnContainer.classList.add("btnContainer");
+
+containerVar.appendChild(display);
+containerVar.appendChild(btnContainer);
+
+function drawCalc() {
+    let itemCounter = 0;
+    let columns = 0;
+    const chars = " 7410 852  963= /*-+";
+    while (columns < 4) {
+        const columnContainer = document.createElement("div");
+        columnContainer.classList.add("columnContainer");
+
+        let rows = 0;
+        while (rows < 5) {
+            const item = document.createElement("div");
+            item.classList.add("btn");
+            item.textContent = chars[itemCounter];
+            columnContainer.appendChild(item);
+            
+            itemCounter++;
+            rows++;
+        }
+        btnContainer.appendChild(columnContainer);
+        columns++;
+    }
+}
+
+drawCalc()
