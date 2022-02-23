@@ -1,3 +1,4 @@
+/*
 .displayContainer {
     height: 48px;
 }
@@ -28,4 +29,22 @@
     margin: 5px;
     border-style: solid;
     border-width: 5px;
+}
+*/
+
+#container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+#displayContainer {
+    height: 48px;
+    background-color: grey;
+    font-size: 48px;
+}
+
+.btn {
+    height: 48px;
+    width: 48px;
 }
