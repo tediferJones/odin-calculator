@@ -32,6 +32,8 @@ function operate(firstTerm, operator, secondTerm) {
 let firstTerm = null;
 let secondTerm = null;
 let currentOperator = null;
+let result = null;
+let chained = null;
 
 const displayVar = document.querySelector("#displayContainer")
 displayVar.textContent = null
@@ -39,7 +41,10 @@ displayVar.textContent = null
 const numBtns = document.querySelectorAll(".number");
 for (const button of numBtns) {
     button.addEventListener("click", () => {
-        //console.log(button.textContent)
+        if (chained === true) {
+            displayVar.textContent = null;
+            chained = false;
+        }
         displayVar.textContent = (displayVar.textContent).concat(button.textContent)
     })
 }
@@ -47,23 +52,22 @@ for (const button of numBtns) {
 const funcBtns = document.querySelectorAll(".function")
 for (const button of funcBtns) {
     button.addEventListener("click", () => {
-        //console.log(displayVar.textContent)
         currentOperator = button.textContent;
         if (firstTerm === null) {
             firstTerm = displayVar.textContent;
             displayVar.textContent = null;
-        } else if (secondTerm === null) {
+        } else {
+            chained = true;
             secondTerm = displayVar.textContent;
-            displayVar.textContent = null;
+            result = operate(Number(firstTerm), currentOperator, Number(secondTerm));//console.log("STEP 2")
+            secondTerm = null
+            firstTerm = result
+
+            displayVar.textContent = result
         }
-        if (firstTerm != null && secondTerm != null) {
-            console.log("YEET")
-            firstTerm = operate(Number(firstTerm), currentOperator, Number(secondTerm))
-            displayVar.textContent = firstTerm;
-        }
-        console.log("First Term is " + firstTerm)
-        console.log("operator is " + currentOperator)
-        console.log("second term is " + secondTerm)
+        //console.log("First Term is " + firstTerm)
+        //console.log("operator is " + currentOperator)
+        //console.log("second term is " + secondTerm)
         //displayVar.textContent = null;
     })
 }
@@ -71,39 +75,14 @@ for (const button of funcBtns) {
 const equalsBtn = document.querySelector(".equals")
 equalsBtn.addEventListener("click", () => {
     secondTerm = displayVar.textContent;
-    //console.log("first term: " + firstTerm)
-    //console.log("second term: " + secondTerm)
-    //console.log("operator is: " + currentOperator)
-    firstTerm = operate(Number(firstTerm), currentOperator, Number(secondTerm))
+    result = operate(Number(firstTerm), currentOperator, Number(secondTerm))
+    secondTerm = null;
+    firstTerm = null;
     
-    displayVar.textContent = firstTerm
+    displayVar.textContent = result
 })
 
 //OLD POOPOO
-
-//funcBtns.addEventListener("click", () => {
-//    console.log("doodoo")
-//})
-//numBtns.addEventListener("click", () => {
-//    console.log("YEET")
-//    return 0
-//})
-
-//console.log(operate(2,"times",10))
-
-
-//const containerVar = document.querySelector("#container");
-
-//const display = document.createElement("div");
-//display.classList.add("displayContainer");
-//display.textContent = null
-//display.style.backgroundColor = "gray";
-
-//const btnContainer = document.createElement("div");
-//btnContainer.classList.add("btnContainer");
-
-//containerVar.appendChild(display);
-//containerVar.appendChild(btnContainer);
 
 function drawCalc() {
     let itemCounter = 0;
