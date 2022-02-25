@@ -25,13 +25,14 @@ function operate(firstTerm, operator, secondTerm) {
     } else if (operator === "/") {
         return divide(firstTerm, secondTerm);
     } else {
-        return "error: didnt recognize operator"
+        return "ERROR"
     }
 }
 
 let firstTerm = null;
 let secondTerm = null;
 let currentOperator = null;
+let previousOperator = null;
 let result = null;
 let chained = null;
 
@@ -52,6 +53,7 @@ for (const button of numBtns) {
 const funcBtns = document.querySelectorAll(".function")
 for (const button of funcBtns) {
     button.addEventListener("click", () => {
+        previousOperator = currentOperator
         currentOperator = button.textContent;
         if (firstTerm === null) {
             firstTerm = displayVar.textContent;
@@ -59,11 +61,15 @@ for (const button of funcBtns) {
         } else {
             chained = true;
             secondTerm = displayVar.textContent;
-            result = operate(Number(firstTerm), currentOperator, Number(secondTerm));//console.log("STEP 2")
+            result = operate(Number(firstTerm), previousOperator, Number(secondTerm));//console.log("STEP 2")
             secondTerm = null
             firstTerm = result
 
             displayVar.textContent = result
+
+            if (displayVar.textContent === ("NaN") || displayVar.textContent === ("Infinity")) {
+                displayVar.textContent = "ERROR"
+            }
         }
         //console.log("First Term is " + firstTerm)
         //console.log("operator is " + currentOperator)
@@ -80,6 +86,21 @@ equalsBtn.addEventListener("click", () => {
     firstTerm = null;
     
     displayVar.textContent = result
+
+    if (displayVar.textContent === ("NaN") || displayVar.textContent === ("Infinity")) {
+        displayVar.textContent = "ERROR"
+    }
+})
+
+const clearBtn = document.querySelector(".clear")
+clearBtn.addEventListener("click", () => {
+    firstTerm = null;
+    secondTerm = null;
+    currentOperator = null;
+    previousOperator = null;
+    result = null;
+    chained = null;
+    displayVar.textContent = null;
 })
 
 //OLD POOPOO
