@@ -35,6 +35,7 @@ let currentOperator = null;
 let previousOperator = null;
 let result = null;
 let chained = null;
+let decimalPresent = false;
 
 const displayVar = document.querySelector("#displayContainer")
 displayVar.textContent = null
@@ -55,12 +56,16 @@ for (const button of funcBtns) {
     button.addEventListener("click", () => {
         previousOperator = currentOperator
         currentOperator = button.textContent;
+        decimalPresent = false;
+
         if (firstTerm === null) {
             firstTerm = displayVar.textContent;
             displayVar.textContent = null;
         } else {
             chained = true;
             secondTerm = displayVar.textContent;
+            hiddenFirstTerm = firstTerm
+            hiddenSecondTerm = secondTerm
             result = operate(Number(firstTerm), previousOperator, Number(secondTerm));//console.log("STEP 2")
             secondTerm = null
             firstTerm = result
@@ -71,12 +76,16 @@ for (const button of funcBtns) {
                 displayVar.textContent = "ERROR"
             }
         }
-        //console.log("First Term is " + firstTerm)
-        //console.log("operator is " + currentOperator)
-        //console.log("second term is " + secondTerm)
-        //displayVar.textContent = null;
     })
 }
+
+const decimalBtn = document.querySelector(".decimal")
+decimalBtn.addEventListener("click", () => {
+    if (decimalPresent === false) {
+        displayVar.textContent = (displayVar.textContent).concat(".")
+        decimalPresent = true;
+    }
+})
 
 const equalsBtn = document.querySelector(".equals")
 equalsBtn.addEventListener("click", () => {
@@ -84,8 +93,15 @@ equalsBtn.addEventListener("click", () => {
     result = operate(Number(firstTerm), currentOperator, Number(secondTerm))
     secondTerm = null;
     firstTerm = null;
-    
+    decimalPresent = false;
+    chained = true;
+    resultCheck = String(result)
+
+    if (resultCheck.length > 10) {
+        result = resultCheck.slice(0,5)
+    }  
     displayVar.textContent = result
+    
 
     if (displayVar.textContent === ("NaN") || displayVar.textContent === ("Infinity")) {
         displayVar.textContent = "ERROR"
@@ -100,36 +116,13 @@ clearBtn.addEventListener("click", () => {
     previousOperator = null;
     result = null;
     chained = null;
+    decimalPresent = false;
     displayVar.textContent = null;
 })
 
-//OLD POOPOO
-
-function drawCalc() {
-    let itemCounter = 0;
-    let columns = 0;
-    const chars = " 7410 852  963= /*-+";
-    while (columns < 4) {
-        const columnContainer = document.createElement("div");
-        columnContainer.classList.add("columnContainer");
-
-        let rows = 0;
-        while (rows < 5) {
-            const item = document.createElement("button");
-            item.classList.add("btn");
-            item.textContent = chars[itemCounter];
-            item.addEventListener("click", () => {
-                console.log(item.textContent)
-                display.textContent = (display.textContent).concat(item.textContent)
-            })
-            columnContainer.appendChild(item);
-            
-            itemCounter++;
-            rows++;
-        }
-        btnContainer.appendChild(columnContainer);
-        columns++;
+const backBtn = document.querySelector(".backspace")
+backBtn.addEventListener("click", () => {
+    if ((displayVar.textContent).length > 0) {
+        displayVar.textContent = (displayVar.textContent).slice(0,-1)
     }
-}
-
-//drawCalc()
+})
