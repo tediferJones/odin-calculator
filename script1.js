@@ -54,6 +54,8 @@ for (const button of numBtns) {
     })
 }
 
+
+
 const funcBtns = document.querySelectorAll(".function")
 for (const button of funcBtns) {
     button.addEventListener("click", () => {
@@ -128,5 +130,20 @@ const backBtn = document.querySelector(".backspace")
 backBtn.addEventListener("click", () => {
     if ((displayVar.textContent).length > 0) {
         displayVar.textContent = (displayVar.textContent).slice(0,-1)
+    }
+})
+
+const bodyVar = document.querySelector("body")
+bodyVar.addEventListener("keydown", (event) => {
+    
+    let nums = [0,1,2,3,4,5,6,7,8,9]
+    if (event.key in nums) {
+        if (chained === true) {
+            displayVar.textContent = null;
+            chained = false;
+        }
+        if ((displayVar.textContent).length < 12) {
+            displayVar.textContent = (displayVar.textContent).concat(event.key)
+        }
     }
 })
