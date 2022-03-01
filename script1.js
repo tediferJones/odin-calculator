@@ -47,7 +47,10 @@ for (const button of numBtns) {
             displayVar.textContent = null;
             chained = false;
         }
-        displayVar.textContent = (displayVar.textContent).concat(button.textContent)
+
+        if ((displayVar.textContent).length < 12) {
+            displayVar.textContent = (displayVar.textContent).concat(button.textContent)
+        }
     })
 }
 
@@ -64,16 +67,17 @@ for (const button of funcBtns) {
         } else {
             chained = true;
             secondTerm = displayVar.textContent;
-            hiddenFirstTerm = firstTerm
-            hiddenSecondTerm = secondTerm
-            result = operate(Number(firstTerm), previousOperator, Number(secondTerm));//console.log("STEP 2")
+            result = operate(Number(firstTerm), previousOperator, Number(secondTerm));
             secondTerm = null
             firstTerm = result
+            resultCheck = String(result)
 
-            displayVar.textContent = result
-
-            if (displayVar.textContent === ("NaN") || displayVar.textContent === ("Infinity")) {
+            if (resultCheck.length > 12) {
+                displayVar.textContent = resultCheck.slice(0,12)
+            } else if (resultCheck === "NaN" || resultCheck === "Infinity") {
                 displayVar.textContent = "ERROR"
+            } else {
+                displayVar.textContent = result
             }
         }
     })
@@ -97,9 +101,9 @@ equalsBtn.addEventListener("click", () => {
     chained = true;
     resultCheck = String(result)
 
-    if (resultCheck.length > 10) {
-        result = resultCheck.slice(0,5)
-    }  
+    if (resultCheck.length > 12) {
+        result = resultCheck.slice(0,12)
+    }
     displayVar.textContent = result
     
 

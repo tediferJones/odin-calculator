@@ -8,8 +8,6 @@ body {
 }
 
 #container {
-    display: flex;
-    flex-flow: column;
     border-width: 10px;
     border-style: solid;
     border-radius: 12px;
@@ -21,6 +19,12 @@ body {
     height: 80px;
     background-color: grey;
     font-size: 64px;
+    font-family: 'Courier New', Courier, monospace;
+
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -35,6 +39,9 @@ body {
 .btn,
 .btn2 {
     font-size: 40px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
 }
 
 .function,
