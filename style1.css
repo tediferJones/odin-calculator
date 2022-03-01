@@ -20,6 +20,7 @@ body {
     background-color: grey;
     font-size: 64px;
     font-family: 'Courier New', Courier, monospace;
+    padding-right: 8px;
 
     border-style: solid;
     border-color: black;
